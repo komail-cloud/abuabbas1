@@ -5,283 +5,100 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>أبو عباس</title>
+
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Tahoma, Arial, sans-serif;
-  background: #101010;
-  color: #f5d36a;
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#101010;color:#f5d36a}
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+.home{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:25px;text-align:center;padding:25px;background:radial-gradient(circle,#38301a,#141414 70%)}
+.home img{width:min(390px,85vw);max-height:40vh;object-fit:contain}
+.home h1{font-size:clamp(55px,9vw,95px);color:#ffda58;margin:0}
+.home-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:25px;margin-top:20px}
+.home-buttons button{min-width:230px;min-height:95px;font-size:23px}
+button{background:linear-gradient(135deg,#ffe67b,#c89219);color:#171717;border:1px solid #e6bd45;border-radius:10px;padding:13px 22px;font:inherit;font-weight:bold;cursor:pointer}
+button:hover{background:#ffe88a}
+.container{max-width:950px;margin:25px auto;padding:28px;background:linear-gradient(145deg,#222,#111);border:2px solid #bd922e;border-radius:15px}
+.toolbar,.actions{display:flex;flex-wrap:wrap;gap:20px;margin:25px 0}
+.actions{justify-content:center}
+.actions button{min-width:165px;margin:0}
+.header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:30px}
+.header h1{font-size:46px;color:#ffda58}
+.header img{width:230px;max-width:45%;height:auto}
+h2{text-align:center;color:#ffda58}
+.row{display:flex;gap:15px;margin-bottom:18px}
+.field{flex:1;min-width:0}
+label{display:block;margin-bottom:7px;font-weight:bold}
+input,textarea{width:100%;padding:12px;background:#fff9e8;color:#111;border:2px solid #c99a24;border-radius:8px;font:inherit}
+.responsible{margin-top:30px;padding-top:18px;border-top:1px solid #a88129}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin-top:20px;background:#fff;color:#111}
+th,td{border:1px solid #777;padding:9px;text-align:center}
+th{background:#d5a52c;color:#111}
+td input{min-width:65px;padding:7px}
+.total{font-size:25px;font-weight:bold;margin:25px 0}
+.contact{text-align:center;padding:22px;margin-top:30px;border-top:2px solid #d5a52c;font-weight:bold}
+.phones{font-size:21px;margin-top:12px;direction:ltr}
+.saved-item{padding:15px;border-bottom:1px solid #a88129;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.login-box{width:min(430px,92%);margin:10vh auto;padding:30px;background:linear-gradient(145deg,#222,#111);border:2px solid #bd922e;border-radius:15px;text-align:center}
+.login-box img{width:180px;max-width:70%;object-fit:contain}
+.login-box h1{color:#ffda58}
+.login-box input{margin:10px 0}
+.login-box button{width:100%;margin-top:12px}
+.status{text-align:center;color:#e6c66c;padding:10px;font-size:14px}
+button:disabled{opacity:.6;cursor:not-allowed}
+@media(max-width:600px){
+.container{margin:5px;padding:13px}
+.row{flex-direction:column}
+.header h1{font-size:32px}
+.header img{width:160px}
+table{font-size:12px}
+td input{padding:5px}
+.actions button{width:100%}
 }
-
-.page { display: none; min-height: 100vh; }
-.page.active { display: block; }
-
-.home {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
-  text-align: center;
-  padding: 25px;
-  background: radial-gradient(
-    circle, #38301a, #141414 70%
-  );
-}
-
-.home img {
-  width: min(390px, 85vw);
-  max-height: 40vh;
-  object-fit: contain;
-}
-
-.home h1 {
-  font-size: clamp(55px, 9vw, 95px);
-  color: #ffda58;
-  margin: 0;
-}
-
-.home-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 20px;
-}
-
-.home-buttons button {
-  min-width: 230px;
-  min-height: 95px;
-  font-size: 23px;
-}
-
-button {
-  background: linear-gradient(135deg,#ffe67b,#c89219);
-  color: #171717;
-  border: 1px solid #e6bd45;
-  border-radius: 10px;
-  padding: 13px 22px;
-  font: inherit;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover { background: #ffe88a; }
-
-.container {
-  max-width: 950px;
-  margin: 25px auto;
-  padding: 28px;
-  background: linear-gradient(145deg,#222,#111);
-  border: 2px solid #bd922e;
-  border-radius: 15px;
-}
-
-.toolbar, .actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin: 25px 0;
-}
-
-.actions { justify-content: center; }
-
-.actions button {
-  min-width: 165px;
-  margin: 0;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.header h1 {
-  font-size: 46px;
-  color: #ffda58;
-}
-
-.header img {
-  width: 230px;
-  max-width: 45%;
-  height: auto;
-}
-
-h2 {
-  text-align: center;
-  color: #ffda58;
-}
-
-.row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 18px;
-}
-
-.field { flex: 1; min-width: 0; }
-
-label {
-  display: block;
-  margin-bottom: 7px;
-  font-weight: bold;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 12px;
-  background: #fff9e8;
-  color: #111;
-  border: 2px solid #c99a24;
-  border-radius: 8px;
-  font: inherit;
-}
-
-.responsible {
-  margin-top: 30px;
-  padding-top: 18px;
-  border-top: 1px solid #a88129;
-}
-
-.table-wrap { overflow-x: auto; }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background: #fff;
-  color: #111;
-}
-
-th, td {
-  border: 1px solid #777;
-  padding: 9px;
-  text-align: center;
-}
-
-th {
-  background: #d5a52c;
-  color: #111;
-}
-
-td input {
-  min-width: 65px;
-  padding: 7px;
-}
-
-.total {
-  font-size: 25px;
-  font-weight: bold;
-  margin: 25px 0;
-}
-
-.contact {
-  text-align: center;
-  padding: 22px;
-  margin-top: 30px;
-  border-top: 2px solid #d5a52c;
-  font-weight: bold;
-}
-
-.phones {
-  font-size: 21px;
-  margin-top: 12px;
-  direction: ltr;
-}
-
-.saved-item {
-  padding: 15px;
-  border-bottom: 1px solid #a88129;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-}
-
-@media(max-width:600px) {
-  .container { margin: 5px; padding: 13px; }
-  .row { flex-direction: column; }
-  .header h1 { font-size: 32px; }
-  .header img { width: 160px; }
-  table { font-size: 12px; }
-  td input { padding: 5px; }
-  .actions button { width: 100%; }
-}
-
-@media print {
-  @page { size: A4; margin: 12mm; }
-
-  body {
-    background: white !important;
-    color: black !important;
-  }
-
-  .page { display: none !important; }
-
-  #invoicePage {
-    display: block !important;
-    min-height: 0;
-  }
-
-  .container {
-    margin: 0;
-    padding: 0;
-    border: none;
-    background: white !important;
-    max-width: none;
-  }
-
-  .no-print { display: none !important; }
-
-  h1, h2, label, .total, .contact {
-    color: black !important;
-  }
-
-  input, textarea {
-    background: white !important;
-    color: black !important;
-    border: 1px solid #555 !important;
-    padding: 7px;
-  }
-
-  th, td {
-    border: 1px solid black !important;
-  }
-
-  th {
-    background: #eee !important;
-    color: black !important;
-  }
-
-  .row { flex-direction: row; }
-
-  tr, .header, .contact {
-    break-inside: avoid;
-  }
+@media print{
+@page{size:A4;margin:12mm}
+body{background:white!important;color:black!important}
+.page{display:none!important}
+#invoicePage{display:block!important;min-height:0}
+.container{margin:0;padding:0;border:none;background:white!important;max-width:none}
+.no-print{display:none!important}
+h1,h2,label,.total,.contact{color:black!important}
+input,textarea{background:white!important;color:black!important;border:1px solid #555!important;padding:7px}
+th,td{border:1px solid black!important}
+th{background:#eee!important;color:black!important}
+.row{flex-direction:row}
+tr,.header,.contact{break-inside:avoid}
 }
 </style>
 </head>
+
 <body>
 
+<!-- تسجيل الدخول -->
+<section id="loginPage" class="page active">
+  <div class="login-box">
+    <img src="logo.jpg" alt="شعار أبو عباس">
+    <h1>أبو عباس</h1>
+    <p>تسجيل الدخول إلى البرنامج</p>
+    <input id="loginEmail" type="email" placeholder="البريد الإلكتروني">
+    <input id="loginPassword" type="password" placeholder="كلمة المرور">
+    <button id="loginButton" onclick="login()">دخول</button>
+    <div id="loginMessage" class="status"></div>
+  </div>
+</section>
+
 <!-- الصفحة الرئيسية -->
-<section id="homePage" class="page active">
+<section id="homePage" class="page">
   <div class="home">
     <img src="logo.jpg" alt="شعار أبو عباس">
     <h1>أبو عباس</h1>
-
     <div class="home-buttons">
-      <button onclick="newInvoice();showPage('invoicePage')">
-        فاتورة جديدة
-      </button>
-      <button onclick="showPage('searchPage')">
-        بحث عن فاتورة
-      </button>
+      <button onclick="newInvoice();showPage('invoicePage')">فاتورة جديدة</button>
+      <button onclick="showPage('searchPage')">بحث عن فاتورة</button>
     </div>
+    <div class="status" id="cloudStatus">متصل بالحفظ السحابي</div>
+    <button onclick="logout()">تسجيل الخروج</button>
   </div>
 </section>
 
@@ -290,12 +107,8 @@ td input {
 <div class="container">
 
   <div class="toolbar no-print">
-    <button onclick="showPage('homePage')">
-      الصفحة الرئيسية
-    </button>
-    <button onclick="showPage('searchPage')">
-      بحث عن فاتورة
-    </button>
+    <button onclick="showPage('homePage')">الصفحة الرئيسية</button>
+    <button onclick="showPage('searchPage')">بحث عن فاتورة</button>
   </div>
 
   <div class="header">
@@ -329,9 +142,11 @@ td input {
     <div class="row">
       <div class="field">
         <label>اسم المسؤول</label>
+        <input id="responsibleName">
       </div>
       <div class="field">
         <label>رقم المسؤول</label>
+        <input id="responsiblePhone">
       </div>
     </div>
   </div>
@@ -358,8 +173,7 @@ td input {
   </div>
 
   <div class="total">
-    المجموع:
-    <span id="total">0.000</span> د.ب
+    المجموع: <span id="total">0.000</span> د.ب
   </div>
 
   <label>ملاحظات</label>
@@ -384,29 +198,46 @@ td input {
 <div class="container">
 
   <div class="toolbar">
-    <button onclick="showPage('homePage')">
-      الصفحة الرئيسية
-    </button>
-    <button onclick="newInvoice();showPage('invoicePage')">
-      فاتورة جديدة
-    </button>
+    <button onclick="showPage('homePage')">الصفحة الرئيسية</button>
+    <button onclick="newInvoice();showPage('invoicePage')">فاتورة جديدة</button>
   </div>
 
   <h2>بحث عن فاتورة</h2>
-
-  <input id="search"
-    placeholder="رقم الفاتورة أو اسم الزبون أو رقم الهاتف"
-    oninput="showInvoices()">
-
+  <input id="search" placeholder="رقم الفاتورة أو اسم الزبون أو رقم الهاتف" oninput="showInvoices()">
   <div id="savedInvoices"></div>
 
 </div>
 </section>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBHrcEY6n-J7za-4bPNs8ywnU6EauslTug",
+  authDomain: "abu-abbas.firebaseapp.com",
+  databaseURL: "https://abu-abbas-default-rtdb.firebaseio.com",
+  projectId: "abu-abbas",
+  storageBucket: "abu-abbas.firebasestorage.app",
+  messagingSenderId: "863423401268",
+  appId: "1:863423401268:web:e89111c6503f80caa82961",
+  measurementId: "G-Y2299RY8T5"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const database = firebase.database();
+
 const storageKey = "abu_abbas_invoices";
 const sequenceKey = "abu_abbas_next_number";
+
 let currentId = null;
+let currentUser = null;
+let cloudReady = false;
+let invoicesCache = [];
 
 const el = id => document.getElementById(id);
 
@@ -416,19 +247,113 @@ function showPage(id) {
   });
 
   if (id === "searchPage") showInvoices();
-
   window.scrollTo(0, 0);
 }
 
-function getInvoices() {
+function databasePath() {
+  return "users/" + currentUser.uid + "/data";
+}
+
+function localInvoices() {
   try {
-    const data = JSON.parse(
-      localStorage.getItem(storageKey) || "[]"
-    );
+    const data = JSON.parse(localStorage.getItem(storageKey) || "[]");
     return Array.isArray(data) ? data : [];
   } catch {
     return [];
   }
+}
+
+function getInvoices() {
+  return invoicesCache;
+}
+
+function setLocalData() {
+  localStorage.setItem(storageKey, JSON.stringify(invoicesCache));
+}
+
+function setStatus(message) {
+  el("cloudStatus").textContent = message;
+}
+
+function login() {
+  const email = el("loginEmail").value.trim();
+  const password = el("loginPassword").value;
+
+  if (!email || !password) {
+    el("loginMessage").textContent = "أدخل البريد الإلكتروني وكلمة المرور";
+    return;
+  }
+
+  el("loginButton").disabled = true;
+  el("loginMessage").textContent = "جارٍ تسجيل الدخول...";
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      el("loginMessage").textContent = "";
+    })
+    .catch(error => {
+      el("loginMessage").textContent = "تعذر الدخول. تأكد من البريد وكلمة المرور.";
+      console.error(error);
+    })
+    .finally(() => {
+      el("loginButton").disabled = false;
+    });
+}
+
+function logout() {
+  auth.signOut();
+}
+
+auth.onAuthStateChanged(async user => {
+  currentUser = user;
+  cloudReady = false;
+
+  if (!user) {
+    showPage("loginPage");
+    return;
+  }
+
+  setStatus("جارٍ تحميل الفواتير...");
+  showPage("homePage");
+
+  try {
+    const snapshot = await database.ref(databasePath()).once("value");
+    const cloudData = snapshot.val();
+
+    if (cloudData && Array.isArray(cloudData.invoices)) {
+      invoicesCache = cloudData.invoices;
+    } else {
+      // نقل الفواتير القديمة من الجهاز إلى السحابة
+      invoicesCache = localInvoices();
+
+      await database.ref(databasePath()).set({
+        invoices: invoicesCache,
+        nextNumber: Number(localStorage.getItem(sequenceKey) || 1)
+      });
+    }
+
+    setLocalData();
+    cloudReady = true;
+    setStatus("متصل بالحفظ السحابي ✓");
+  } catch (error) {
+    console.error(error);
+    setStatus("تعذر الاتصال بالسحابة. تحقق من الإنترنت والصلاحيات.");
+    alert("تعذر تحميل الفواتير من Firebase. لم يتم إجراء أي تعديل عليها.");
+  }
+});
+
+async function syncCloud() {
+  if (!currentUser || !cloudReady) {
+    throw new Error("الحفظ السحابي غير جاهز");
+  }
+
+  await database.ref(databasePath()).update({
+    invoices: invoicesCache,
+    nextNumber: Number(localStorage.getItem(sequenceKey) || 1)
+  });
+
+  setLocalData();
+  setStatus("تمت المزامنة مع السحابة ✓");
 }
 
 function addItem(item = {}) {
@@ -436,14 +361,10 @@ function addItem(item = {}) {
 
   row.innerHTML = `
     <td><input class="name" placeholder="الصنف"></td>
-    <td><input class="qty" type="number"
-      min="0" step="any"></td>
-    <td><input class="price" type="number"
-      min="0" step="0.001"></td>
+    <td><input class="qty" type="number" min="0" step="any"></td>
+    <td><input class="price" type="number" min="0" step="0.001"></td>
     <td class="lineTotal">0.000</td>
-    <td class="no-print">
-      <button onclick="removeItem(this)">حذف</button>
-    </td>
+    <td class="no-print"><button onclick="removeItem(this)">حذف</button></td>
   `;
 
   el("items").appendChild(row);
@@ -468,19 +389,11 @@ function calculateTotal() {
   let total = 0;
 
   document.querySelectorAll("#items tr").forEach(row => {
-    const qty = Number(
-      row.querySelector(".qty").value
-    ) || 0;
-
-    const price = Number(
-      row.querySelector(".price").value
-    ) || 0;
-
+    const qty = Number(row.querySelector(".qty").value) || 0;
+    const price = Number(row.querySelector(".price").value) || 0;
     const lineTotal = qty * price;
 
-    row.querySelector(".lineTotal").textContent =
-      lineTotal.toFixed(3);
-
+    row.querySelector(".lineTotal").textContent = lineTotal.toFixed(3);
     total += lineTotal;
   });
 
@@ -492,9 +405,7 @@ function nextInvoiceNumber() {
     .map(invoice => Number(invoice.number))
     .filter(n => Number.isSafeInteger(n) && n > 0);
 
-  const savedNext = Number(
-    localStorage.getItem(sequenceKey) || 1
-  );
+  const savedNext = Number(localStorage.getItem(sequenceKey) || 1);
 
   return Math.max(1, savedNext, ...numbers.map(n => n + 1));
 }
@@ -511,10 +422,7 @@ function localDate() {
 
 function newInvoice() {
   currentId = null;
-
-  el("invoiceNumber").value =
-    String(nextInvoiceNumber());
-
+  el("invoiceNumber").value = String(nextInvoiceNumber());
   el("invoiceDate").value = localDate();
 
   [
@@ -530,16 +438,18 @@ function newInvoice() {
 }
 
 function collectItems() {
-  return [...document.querySelectorAll("#items tr")]
-    .map(row => ({
-      name: row.querySelector(".name").value,
-      qty: Number(row.querySelector(".qty").value) || 0,
-      price: Number(row.querySelector(".price").value) || 0
-    }));
+  return [...document.querySelectorAll("#items tr")].map(row => ({
+    name: row.querySelector(".name").value,
+    qty: Number(row.querySelector(".qty").value) || 0,
+    price: Number(row.querySelector(".price").value) || 0
+  }));
 }
 
-function saveInvoice() {
-  const invoices = getInvoices();
+async function saveInvoice() {
+  if (!cloudReady) {
+    alert("انتظر حتى يكتمل الاتصال بالحفظ السحابي");
+    return;
+  }
 
   const invoice = {
     id: currentId || String(Date.now()),
@@ -558,7 +468,7 @@ function saveInvoice() {
     return;
   }
 
-  if (invoices.some(item =>
+  if (getInvoices().some(item =>
     String(item.number) === invoice.number &&
     String(item.id) !== String(invoice.id)
   )) {
@@ -566,49 +476,48 @@ function saveInvoice() {
     return;
   }
 
-  const index = invoices.findIndex(item =>
+  const oldInvoices = [...invoicesCache];
+
+  const index = invoicesCache.findIndex(item =>
     String(item.id) === String(invoice.id)
   );
 
   if (index >= 0) {
-    invoices[index] = invoice;
+    invoicesCache[index] = invoice;
   } else {
-    invoices.unshift(invoice);
+    invoicesCache.unshift(invoice);
+  }
+
+  const number = Number(invoice.number);
+
+  if (Number.isSafeInteger(number) && number > 0) {
+    localStorage.setItem(
+      sequenceKey,
+      String(Math.max(nextInvoiceNumber(), number + 1))
+    );
   }
 
   try {
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify(invoices)
-    );
-
-    const number = Number(invoice.number);
-
-    if (Number.isSafeInteger(number) && number > 0) {
-      localStorage.setItem(
-        sequenceKey,
-        String(Math.max(nextInvoiceNumber(), number + 1))
-      );
-    }
-
+    await syncCloud();
     currentId = invoice.id;
-    alert("تم حفظ الفاتورة بنجاح");
-  } catch {
-    alert("تعذر حفظ الفاتورة");
+    alert("تم حفظ الفاتورة ومزامنتها بنجاح");
+  } catch (error) {
+    invoicesCache = oldInvoices;
+    alert("لم يتم حفظ الفاتورة في السحابة. حاول مرة أخرى.");
+    console.error(error);
   }
 }
 
 function showInvoices() {
-  const search = el("search").value.trim().toLowerCase();
+  const search = (el("search").value || "").trim().toLowerCase();
   const container = el("savedInvoices");
 
   container.replaceChildren();
 
   const invoices = getInvoices().filter(invoice =>
-    [invoice.number, invoice.customer, invoice.phone]
-      .some(value =>
-        String(value ?? "").toLowerCase().includes(search)
-      )
+    [invoice.number, invoice.customer, invoice.phone].some(value =>
+      String(value ?? "").toLowerCase().includes(search)
+    )
   );
 
   invoices.forEach(invoice => {
@@ -616,8 +525,7 @@ function showInvoices() {
     div.className = "saved-item";
 
     const title = document.createElement("span");
-    title.textContent =
-      invoice.number + " - " +
+    title.textContent = invoice.number + " - " +
       (invoice.customer || "بدون اسم");
 
     const edit = document.createElement("button");
@@ -657,37 +565,43 @@ function loadInvoice(id) {
   });
 
   el("items").innerHTML = "";
-
   (invoice.items || []).forEach(item => addItem(item));
 
   calculateTotal();
   showPage("invoicePage");
 }
 
-function deleteInvoice(id) {
+async function deleteInvoice(id) {
   if (!confirm("هل تريد حذف هذه الفاتورة؟")) return;
+  if (!cloudReady) {
+    alert("انتظر حتى يكتمل الاتصال بالسحابة");
+    return;
+  }
 
-  const invoices = getInvoices().filter(item =>
+  const oldInvoices = [...invoicesCache];
+
+  invoicesCache = invoicesCache.filter(item =>
     String(item.id) !== String(id)
   );
 
   try {
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify(invoices)
-    );
+    await syncCloud();
 
     if (String(currentId) === String(id)) {
       currentId = null;
     }
 
     showInvoices();
-  } catch {
-    alert("تعذر حذف الفاتورة");
+    alert("تم حذف الفاتورة");
+  } catch (error) {
+    invoicesCache = oldInvoices;
+    alert("تعذر حذف الفاتورة من السحابة");
+    console.error(error);
   }
 }
 
 newInvoice();
 </script>
+
 </body>
 </html>
