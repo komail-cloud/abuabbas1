@@ -1,71 +1,25 @@
-
-<script type="module">
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBHrcEY6n-J7za-4bPN8sYwnU6EauslTug",
-  authDomain: "abu-abbas.firebaseapp.com",
-  databaseURL: "https://abu-abbas-default-rtdb.firebaseio.com",
-  projectId: "abu-abbas",
-  storageBucket: "abu-abbas.firebasestorage.app",
-  messagingSenderId: "863423401268",
-  appId: "1:863423401268:web:e89111c6503f80caa82961",
-  measurementId: "G-Y2299RY8T5"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-window.login = async function () {
+window.forgotPassword = async function () {
   const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
   const error = document.getElementById("loginError");
 
-  error.textContent = "";
-
-  if (!email || !password) {
-    error.textContent = "أدخل البريد الإلكتروني وكلمة المرور";
+  if (!email) {
+    error.textContent = "اكتب بريدك الإلكتروني أولاً";
     return;
   }
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    await sendPasswordResetEmail(auth, email);
+    error.style.color = "#55c58b";
+    error.textContent = "تم إرسال رابط تغيير كلمة المرور إلى بريدك الإلكتروني";
   } catch (e) {
-    const messages = {
-      "auth/invalid-credential": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
-      "auth/user-not-found": "الحساب غير موجود",
-      "auth/wrong-password": "كلمة المرور غير صحيحة",
-      "auth/invalid-email": "البريد الإلكتروني غير صحيح",
-      "auth/too-many-requests": "محاولات كثيرة، حاول لاحقاً",
-      "auth/network-request-failed": "تحقق من اتصال الإنترنت"
-    };
-
-    error.textContent =
-      messages[e.code] || "تعذر تسجيل الدخول: " + e.message;
+    error.style.color = "#e45b5b";
+    error.textContent = "تعذر الإرسال. تأكد من البريد الإلكتروني وإعدادات Firebase";
   }
 };
 
-window.logout = async function () {
-  await signOut(auth);
+window.forgotUsername = function () {
+  const error = document.getElementById("loginError");
+  error.style.color = "#d6b45c";
+  error.textContent =
+    "اسم المستخدم هو البريد الإلكتروني الذي سجلت به حسابك. يمكنك العثور عليه في Firebase ثم Authentication ثم Users.";
 };
-
-onAuthStateChanged(auth, user => {
-  if (user) {
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("app").style.display = "flex";
-    document.getElementById("userName").textContent =
-      user.email || "المستخدم";
-  } else {
-    document.getElementById("app").style.display = "none";
-    document.getElementById("loginScreen").style.display = "flex";
-  }
-});
-</script>
