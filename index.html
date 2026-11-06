@@ -1,379 +1,71 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>أبو عباس للنجارة</title>
-
-<style>
-:root{
-  --bg:#0b0b0b;
-  --panel:#171717;
-  --panel2:#202020;
-  --gold:#d6b45c;
-  --gold2:#f5df9b;
-  --text:#f5f1e5;
-  --muted:#aaa18c;
-  --red:#e45b5b;
-  --green:#55c58b;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Tahoma,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.app{display:flex;min-height:100vh}
-.sidebar{
-  width:255px;
-  background:#111;
-  border-left:1px solid #3d321a;
-  padding:22px 15px;
-  flex-shrink:0;
-}
-.brand{
-  text-align:center;
-  padding:10px 5px 25px;
-  border-bottom:1px solid #493b20;
-}
-.brand img{
-  width:90px;height:90px;
-  object-fit:contain;
-  margin-bottom:8px;
-}
-.brand h2{
-  color:var(--gold);
-  margin:5px 0;
-  font-size:22px;
-}
-.brand small{color:var(--muted)}
-.nav-title{
-  color:#8c805f;
-  font-size:12px;
-  margin:22px 10px 9px;
-}
-.nav button{
-  display:block;
-  width:100%;
-  text-align:right;
-  color:#ddd3bb;
-  background:transparent;
-  border:0;
-  border-radius:9px;
-  padding:13px 12px;
-  margin:4px 0;
-  transition:.2s;
-}
-.nav button:hover,.nav button.active{
-  color:var(--gold2);
-  background:#302716;
-  border-right:3px solid var(--gold);
-}
-.main{flex:1;min-width:0}
-.topbar{
-  height:75px;
-  background:#121212;
-  border-bottom:1px solid #302716;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
-}
-.topbar h3{color:var(--gold);margin:0}
-.user-info{color:#d5c69f;font-size:13px}
-.content{padding:25px;max-width:1500px;margin:auto}
-.page{display:none}
-.page.active{display:block}
-.page-heading{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:22px;
-}
-.page-heading h2{color:var(--gold);margin:0}
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:15px;
-  margin-bottom:25px;
-}
-.stat-card{
-  background:linear-gradient(145deg,#202020,#131313);
-  border:1px solid #514222;
-  border-radius:14px;
-  padding:20px;
-  box-shadow:0 5px 20px #0005;
-}
-.stat-card small{color:var(--muted)}
-.stat-card h2{color:var(--gold2);font-size:25px;margin:13px 0 0}
-.panel{
-  background:var(--panel);
-  border:1px solid #39301e;
-  border-radius:13px;
-  padding:20px;
-  margin-bottom:20px;
-}
-.panel h3{color:var(--gold);margin-top:0}
-.grid-form{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:14px;
-}
-.field label{
-  display:block;
-  color:#cfc3a4;
-  font-size:13px;
-  margin-bottom:7px;
-}
-.field input,.field select,.field textarea,
-.search-box{
-  width:100%;
-  background:#0e0e0e;
-  border:1px solid #51452d;
-  border-radius:8px;
-  color:white;
-  padding:12px;
-  outline:none;
-}
-.field input:focus,.field select:focus,.field textarea:focus{
-  border-color:var(--gold);
-}
-.btn{
-  border:0;
-  border-radius:8px;
-  padding:11px 17px;
-  font-weight:bold;
-}
-.btn-gold{background:var(--gold);color:#17120a}
-.btn-dark{background:#333;color:white}
-.btn-red{background:#722c2c;color:white}
-.btn-green{background:#205b3e;color:white}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{
-  padding:13px 10px;
-  border-bottom:1px solid #393329;
-  text-align:right;
-  font-size:13px;
-}
-th{color:var(--gold);background:#211d15}
-td{color:#e8e1d2}
-.empty{text-align:center;color:#9c927d;padding:25px}
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:11px;
-}
-.paid{background:#174a32;color:#8be3ae}
-.unpaid{background:#572727;color:#ffaaaa}
-.partial{background:#55451d;color:#f4d77d}
-.login-screen{
-  position:fixed;inset:0;
-  background:#090909;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:1000;
-}
-.login-box{
-  width:100%;max-width:390px;
-  background:#171717;
-  border:1px solid var(--gold);
-  border-radius:17px;
-  padding:30px;
-  text-align:center;
-}
-.login-box h2{color:var(--gold)}
-.login-box input{
-  width:100%;padding:13px;margin:8px 0;
-  background:#0b0b0b;color:white;
-  border:1px solid #554526;border-radius:8px;
-}
-.mobile-menu{display:none}
-@media(max-width:800px){
-  .app{display:block}
-  .sidebar{width:100%;padding:10px}
-  .brand{display:flex;align-items:center;justify-content:center;gap:12px;padding:5px}
-  .brand img{width:45px;height:45px;margin:0}
-  .nav{display:flex;overflow-x:auto;gap:5px;padding:8px 0}
-  .nav-title{display:none}
-  .nav button{white-space:nowrap;width:auto;min-width:max-content}
-  .topbar{height:60px;padding:0 14px}
-  .content{padding:14px}
-}
-</style>
-</head>
-
-<body>
-
-<div id="loginScreen" class="login-screen">
-  <div class="login-box">
-    <img src="logo.jpg" alt="شعار أبو عباس"
-         style="width:90px;height:90px;object-fit:contain">
-    <h2>أبو عباس للنجارة</h2>
-    <p style="color:#aaa">نظام إدارة المحل</p>
-    <input id="email" type="email" placeholder="البريد الإلكتروني">
-    <input id="password" type="password" placeholder="كلمة المرور">
-    <button class="btn btn-gold" style="width:100%;margin-top:12px"
-            onclick="login()">تسجيل الدخول</button>
-    <p id="loginError" style="color:#e66"></p>
-  </div>
-</div>
-
-<div class="app" id="app" style="display:none">
-
-<aside class="sidebar">
-  <div class="brand">
-    <img src="logo.jpg" alt="الشعار">
-    <div>
-      <h2>أبو عباس</h2>
-      <small>للنجارة والأعمال الخشبية</small>
-    </div>
-  </div>
-
-  <div class="nav">
-    <div class="nav-title">القائمة الرئيسية</div>
-    <button class="active" onclick="showPage('dashboard',this)">⌂ لوحة التحكم</button>
-    <button onclick="showPage('invoices',this)">▤ الفواتير</button>
-    <button onclick="showPage('customers',this)">♙ الزبائن</button>
-    <button onclick="showPage('payments',this)">د.ب الدفعات</button>
-    <button onclick="showPage('sales',this)">◈ المبيعات</button>
-    <button onclick="showPage('purchases',this)">▣ المشتريات</button>
-    <button onclick="showPage('expenses',this)">− المصروفات</button>
-    <button onclick="showPage('debts',this)">◷ الديون</button>
-    <button onclick="showPage('cash',this)">▤ الصندوق</button>
-    <button onclick="showPage('reports',this)">▥ التقارير</button>
-    <button onclick="showPage('employees',this)">♙ الموظفون</button>
-    <button onclick="showPage('settings',this)">⚙ الإعدادات</button>
-  </div>
-</aside>
-
-<main class="main">
-  <header class="topbar">
-    <h3>نظام أبو عباس</h3>
-    <div class="user-info">
-      <span id="userName">المستخدم</span>
-      |
-      <button class="btn btn-dark" onclick="logout()">خروج</button>
-    </div>
-  </header>
-
-  <div class="content">
-
-    <section id="dashboard" class="page active">
-      <div class="page-heading">
-        <h2>لوحة التحكم</h2>
-        <span id="todayDate"></span>
-      </div>
-      <div class="cards">
-        <div class="stat-card"><small>إجمالي الفواتير</small><h2 id="totalInvoices">0</h2></div>
-        <div class="stat-card"><small>إجمالي المبيعات</small><h2 id="totalSales">0.000 د.ب</h2></div>
-        <div class="stat-card"><small>المبالغ المستلمة</small><h2 id="totalPaid">0.000 د.ب</h2></div>
-        <div class="stat-card"><small>المبالغ المتبقية</small><h2 id="totalRemaining">0.000 د.ب</h2></div>
-        <div class="stat-card"><small>عدد الزبائن</small><h2 id="totalCustomers">0</h2></div>
-        <div class="stat-card"><small>المصروفات</small><h2 id="totalExpenses">0.000 د.ب</h2></div>
-      </div>
-      <div class="panel">
-        <h3>أحدث الفواتير</h3>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>رقم الفاتورة</th><th>الزبون</th><th>التاريخ</th><th>الإجمالي</th><th>الحالة</th></tr></thead>
-            <tbody id="recentInvoices"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section id="invoices" class="page">
-      <div class="page-heading">
-        <h2>إدارة الفواتير</h2>
-        <button class="btn btn-gold" onclick="newInvoice()">+ فاتورة جديدة</button>
-      </div>
-      <div class="panel">
-        <input class="search-box" id="invoiceSearch" placeholder="ابحث برقم الفاتورة أو اسم الزبون..." oninput="renderInvoices()">
-      </div>
-      <div class="panel">
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th>رقم</th><th>الزبون</th><th>التاريخ</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th>أنشأها</th><th>الحالة</th><th>الإجراء</th></tr>
-            </thead>
-            <tbody id="invoiceRows"></tbody>
-          </table>
-        </div>
-      </div>
-      <div class="panel" id="invoiceEditor" style="display:none">
-        <h3>بيانات الفاتورة</h3>
-        <div class="grid-form">
-          <div class="field"><label>اسم الزبون</label><select id="invoiceCustomer"></select></div>
-          <div class="field"><label>تاريخ الفاتورة</label><input id="invoiceDate" type="date"></div>
-          <div class="field"><label>المبلغ الإجمالي (د.ب)</label><input id="invoiceTotal" type="number" min="0" step="0.001"></div>
-          <div class="field"><label>المبلغ المدفوع (د.ب)</label><input id="invoicePaid" type="number" min="0" step="0.001"></div>
-        </div>
-        <div class="field" style="margin-top:14px">
-          <label>تفاصيل العمل</label>
-          <textarea id="invoiceDetails" rows="4"></textarea>
-        </div>
-        <div style="display:flex;gap:10px;margin-top:17px;flex-wrap:wrap">
-          <button class="btn btn-gold" onclick="saveInvoice()">حفظ الفاتورة</button>
-          <button class="btn btn-dark" onclick="closeInvoice()">إلغاء</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="customers" class="page">
-      <div class="page-heading"><h2>الزبائن</h2></div>
-      <div class="panel">
-        <div class="grid-form">
-          <div class="field"><label>اسم الزبون</label><input id="customerName"></div>
-          <div class="field"><label>رقم الهاتف</label><input id="customerPhone"></div>
-        </div>
-        <button class="btn btn-gold" style="margin-top:15px" onclick="addCustomer()">إضافة زبون</button>
-      </div>
-      <div class="panel"><div class="table-wrap"><table>
-        <thead><tr><th>الاسم</th><th>الهاتف</th><th>الإجراء</th></tr></thead>
-        <tbody id="customerRows"></tbody>
-      </table></div></div>
-    </section>
-
-    <section id="payments" class="page">
-      <div class="page-heading"><h2>الدفعات</h2></div>
-      <div class="panel">
-        <p>سجل الدفعات المرتبطة بالفواتير وتابع المبالغ المستلمة.</p>
-        <div class="grid-form">
-          <div class="field"><label>الفاتورة</label><select id="paymentInvoice"></select></div>
-          <div class="field"><label>المبلغ</label><input id="paymentAmount" type="number" min="0" step="0.001"></div>
-          <div class="field"><label>التاريخ</label><input id="paymentDate" type="date"></div>
-        </div>
-        <button class="btn btn-gold" style="margin-top:15px" onclick="addPayment()">تسجيل دفعة</button>
-      </div>
-      <div class="panel"><div class="table-wrap"><table>
-        <thead><tr><th>الفاتورة</th><th>الزبون</th><th>المبلغ</th><th>التاريخ</th><th>الموظف</th></tr></thead>
-        <tbody id="paymentRows"></tbody>
-      </table></div></div>
-    </section>
-
-    <section id="sales" class="page"><div class="page-heading"><h2>المبيعات</h2></div><div class="panel" id="salesContent"></div></section>
-    <section id="purchases" class="page"><div class="page-heading"><h2>المشتريات</h2></div><div class="panel" id="purchasesContent"></div></section>
-    <section id="expenses" class="page"><div class="page-heading"><h2>المصروفات</h2></div><div class="panel" id="expensesContent"></div></section>
-    <section id="debts" class="page"><div class="page-heading"><h2>الديون</h2></div><div class="panel" id="debtsContent"></div></section>
-    <section id="cash" class="page"><div class="page-heading"><h2>الصندوق</h2></div><div class="panel" id="cashContent"></div></section>
-    <section id="reports" class="page"><div class="page-heading"><h2>التقارير</h2></div><div class="panel" id="reportsContent"></div></section>
-    <section id="employees" class="page"><div class="page-heading"><h2>إدارة الموظفين</h2></div><div class="panel" id="employeesContent"></div></section>
-    <section id="settings" class="page"><div class="page-heading"><h2>الإعدادات</h2></div><div class="panel" id="settingsContent"></div></section>
-
-  </div>
-</main>
-</div>
 
 <script type="module">
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBHrcEY6n-J7za-4bPN8sYwnU6EauslTug",
+  authDomain: "abu-abbas.firebaseapp.com",
+  databaseURL: "https://abu-abbas-default-rtdb.firebaseio.com",
+  projectId: "abu-abbas",
+  storageBucket: "abu-abbas.firebasestorage.app",
+  messagingSenderId: "863423401268",
+  appId: "1:863423401268:web:e89111c6503f80caa82961",
+  measurementId: "G-Y2299RY8T5"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = async function () {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const error = document.getElementById("loginError");
+
+  error.textContent = "";
+
+  if (!email || !password) {
+    error.textContent = "أدخل البريد الإلكتروني وكلمة المرور";
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (e) {
+    const messages = {
+      "auth/invalid-credential": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+      "auth/user-not-found": "الحساب غير موجود",
+      "auth/wrong-password": "كلمة المرور غير صحيحة",
+      "auth/invalid-email": "البريد الإلكتروني غير صحيح",
+      "auth/too-many-requests": "محاولات كثيرة، حاول لاحقاً",
+      "auth/network-request-failed": "تحقق من اتصال الإنترنت"
+    };
+
+    error.textContent =
+      messages[e.code] || "تعذر تسجيل الدخول: " + e.message;
+  }
+};
+
+window.logout = async function () {
+  await signOut(auth);
+};
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("app").style.display = "flex";
+    document.getElementById("userName").textContent =
+      user.email || "المستخدم";
+  } else {
+    document.getElementById("app").style.display = "none";
+    document.getElementById("loginScreen").style.display = "flex";
+  }
+});
 </script>
-</body>
-</html>
