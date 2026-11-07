@@ -2,86 +2,422 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>أبو عباس للنجارة</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أبو عباس - الفواتير</title>
 <style>
-:root{--gold:#d6b45c;--gold2:#f3d98b;--bg:#101010;--panel:#1b1b1b;--muted:#aaa;--border:#38322a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f5f5;font-family:Tahoma,Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:12px 17px;background:var(--gold);color:#17130a;font-weight:bold}button:hover{background:var(--gold2)}button.secondary{background:#343434;color:#fff}button.danger{background:#7b2929;color:white}.hidden{display:none!important}.wrap{max-width:1000px;margin:auto;padding:20px}.header{text-align:center;padding:24px 10px 16px}.header h1{margin:0;color:var(--gold);font-size:clamp(25px,5vw,36px)}.header p{color:var(--muted);margin:9px 0 0}.status{font-size:12px;color:var(--muted);text-align:center;margin:0 0 18px}.home-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:700px;margin:32px auto}.home-card{min-height:155px;background:var(--panel);border:1px solid var(--border);border-radius:18px;color:var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-size:20px}.home-card span{font-size:36px}.panel{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:20px;margin:16px 0}.panel h2{color:var(--gold);font-size:20px;margin:0 0 18px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.full{grid-column:1/-1}label{display:block;font-size:14px;color:#ddd;margin:8px 0 5px}input,select,textarea{width:100%;padding:12px;margin:0 0 12px;background:#111;color:white;border:1px solid #494235;border-radius:9px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--gold)}input[readonly]{color:#d6b45c;background:#191919}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}.search{max-width:450px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:620px}th,td{padding:11px 9px;border-bottom:1px solid #383838;text-align:right;font-size:13px}th{color:var(--gold)}.empty{text-align:center;color:var(--muted);padding:24px}.invoice-paper{background:white;color:#111;padding:25px;border-radius:8px}.invoice-paper h2{color:#8a6825}.invoice-paper hr{border:0;border-top:1px solid #ddd;margin:16px 0}.muted{color:var(--muted);font-size:13px}.top-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:11px;background:#17452d;color:#9af0b8}
-@media(max-width:650px){.wrap{padding:13px}.home-grid{gap:10px;margin:24px auto}.home-card{min-height:135px;font-size:17px;padding:10px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.panel{padding:15px}}
-@media print{body{background:white}.no-print{display:none!important}.wrap{padding:0}.screen{display:none!important}#printArea{display:block!important}.invoice-paper{border-radius:0}}
+* { box-sizing: border-box; }
+:root { --gold:#f5d36a; --gold2:#c89219; --bg:#101010; }
+body { margin:0; font-family:Tahoma,Arial,sans-serif; background:var(--bg); color:var(--gold); }
+.page { display:none; min-height:100vh; }
+.page.active { display:block; }
+.home { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:25px; text-align:center; padding:25px; background:radial-gradient(circle,#38301a,#141414 70%); }
+.home h1 { font-size:clamp(55px,9vw,95px); color:#ffda58; margin:0; }
+.home-buttons { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:20px; }
+.home-buttons button { min-width:230px; min-height:95px; font-size:23px; }
+button { background:linear-gradient(135deg,#ffe67b,#c89219); color:#171717; border:1px solid #e6bd45; border-radius:10px; padding:13px 18px; font:inherit; font-weight:bold; cursor:pointer; touch-action:manipulation; }
+button:hover { background:#ffe88a; }
+button:disabled { opacity:.55; cursor:wait; }
+.container { max-width:950px; margin:25px auto; padding:28px; background:linear-gradient(145deg,#222,#111); border:2px solid #bd922e; border-radius:15px; }
+.toolbar,.actions { display:flex; flex-wrap:wrap; gap:12px; margin:22px 0; }
+.actions { justify-content:center; }
+.actions button { min-width:165px; flex:1 1 185px; }
+.header { display:flex; justify-content:center; align-items:center; margin-bottom:30px; text-align:center; }
+.header h1 { font-size:46px; color:#ffda58; margin:10px 0; }
+h2 { text-align:center; color:#ffda58; }
+.row { display:flex; gap:15px; margin-bottom:18px; }
+.field { flex:1; min-width:0; }
+label { display:block; margin-bottom:7px; font-weight:bold; }
+input,textarea { width:100%; padding:12px; background:#fff9e8; color:#111; border:2px solid #c99a24; border-radius:8px; font:inherit; font-size:16px; }
+.responsible { margin-top:30px; padding-top:18px; border-top:1px solid #a88129; }
+.table-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; margin-top:20px; background:#fff; color:#111; }
+th,td { border:1px solid #777; padding:9px; text-align:center; }
+th { background:#d5a52c; color:#111; }
+td input { min-width:65px; padding:7px; }
+td button { padding:8px 12px; }
+.total { font-size:25px; font-weight:bold; margin:25px 0; }
+.contact { text-align:center; padding:22px; margin-top:30px; border-top:2px solid #d5a52c; font-weight:bold; }
+.phones { font-size:21px; margin-top:12px; direction:ltr; unicode-bidi:embed; }
+.saved-item { padding:15px; border-bottom:1px solid #a88129; display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+.saved-item span { flex:1 1 170px; overflow-wrap:anywhere; }
+.hint { font-size:14px; color:#ecd89e; line-height:1.7; }
+/* بطاقة تصدير الفاتورة: تصميم عمودي واضح عند عرضه على الهاتف */
+#renderStage { position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,.75); display:none; overflow:auto; padding:12px; }
+#renderStage.open { display:block; }
+.export-card { width:100%; max-width:420px; margin:0 auto 20px; padding:25px 20px; background:#fff; color:#202020; font-family:Tahoma,Arial,sans-serif; direction:rtl; line-height:1.65; border-top:8px solid #bb8e24; border-radius:6px; }
+.export-card .export-title { text-align:center; margin:0 0 4px; font-size:36px; color:#6e4b09; }
+.export-card .export-subtitle { text-align:center; margin:0 0 18px; font-size:17px; color:#555; }
+.export-card .export-meta { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:18px; }
+.export-card .export-box { background:#f7f2e6; border:1px solid #dbc99d; border-radius:6px; padding:9px 10px; min-width:0; overflow-wrap:anywhere; }
+.export-card .export-label { font-size:12px; color:#6c6047; display:block; }
+.export-card .export-value { font-size:16px; font-weight:bold; display:block; overflow-wrap:anywhere; }
+.export-card .export-section { font-size:19px; color:#6e4b09; border-bottom:2px solid #c8a14d; margin:18px 0 10px; padding-bottom:4px; }
+.export-card .export-product { padding:12px 0; border-bottom:1px solid #ddd; }
+.export-card .export-product-name { font-weight:bold; font-size:17px; margin-bottom:6px; overflow-wrap:anywhere; }
+.export-card .export-product-details { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; font-size:13px; text-align:center; }
+.export-card .export-product-details > div { background:#f7f7f7; padding:6px 3px; border-radius:4px; min-width:0; overflow-wrap:anywhere; }
+.export-card .export-product-details b { font-size:14px; display:block; color:#252525; }
+.export-card .export-total { background:#f2e5c6; color:#272018; padding:14px; text-align:center; font-size:22px; font-weight:bold; margin-top:18px; border-radius:6px; }
+.export-card .export-notes { white-space:pre-wrap; overflow-wrap:anywhere; margin:0; }
+.export-card .export-contact { text-align:center; padding-top:13px; margin-top:18px; border-top:2px solid #bc9030; font-weight:bold; font-size:15px; }
+.export-card .export-contact b { display:block; direction:ltr; font-size:17px; }
+#previewOverlay { display:none; position:fixed; inset:0; z-index:10001; background:rgba(0,0,0,.92); color:white; overflow:auto; padding:18px; text-align:center; }
+#previewOverlay.open { display:block; }
+#previewOverlay img { display:block; width:auto; max-width:100%; max-height:70vh; object-fit:contain; margin:14px auto; background:#fff; }
+#previewOverlay .preview-buttons { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:16px 0; }
+#previewOverlay p { line-height:1.7; }
+@media(max-width:650px) {
+  .container { margin:7px; padding:15px 12px; }
+  .row { flex-direction:column; gap:12px; }
+  .header h1 { font-size:35px; }
+  .home-buttons { width:100%; }
+  .home-buttons button { width:100%; min-width:0; }
+  .toolbar button { flex:1 1 125px; }
+  .actions { gap:10px; }
+  .actions button { flex:1 1 100%; }
+  .total { font-size:22px; }
+  .phones { font-size:18px; }
+  /* تحويل أصناف الفاتورة إلى بطاقات بدل جدول ضيق على الجوال */
+  #itemsTable, #itemsTable tbody, #itemsTable tr, #itemsTable td { display:block; width:100%; }
+  #itemsTable { background:transparent; margin-top:15px; }
+  #itemsTable thead { display:none; }
+  #itemsTable tr { margin-bottom:14px; border:1px solid #c99a24; border-radius:10px; overflow:hidden; background:#fff9e8; padding:9px; }
+  #itemsTable td { display:grid; grid-template-columns:85px minmax(0,1fr); align-items:center; border:0; text-align:right; padding:7px 3px; gap:8px; }
+  #itemsTable td::before { content:attr(data-label); font-weight:bold; color:#333; }
+  #itemsTable td input { width:100%; min-width:0; }
+  #itemsTable td.lineTotal { font-weight:bold; }
+  .export-card { padding:20px 15px; }
+}
+@media print {
+  @page { size:A4; margin:12mm; }
+  body { background:white !important; color:black !important; }
+  .page { display:none !important; }
+  #invoicePage { display:block !important; min-height:0; }
+  .container { margin:0; padding:0; border:0; background:#fff !important; max-width:none; }
+  .no-print,#renderStage,#previewOverlay { display:none !important; }
+  h1,h2,label,.total,.contact { color:black !important; }
+  input,textarea { background:white !important; color:black !important; border:1px solid #555 !important; padding:7px; }
+  th,td { border:1px solid black !important; }
+  th { background:#eee !important; color:black !important; }
+  .row { flex-direction:row !important; }
+  #itemsTable { display:table !important; width:100% !important; background:white !important; }
+  #itemsTable thead { display:table-header-group !important; }
+  #itemsTable tbody { display:table-row-group !important; }
+  #itemsTable tr { display:table-row !important; border:0 !important; padding:0 !important; }
+  #itemsTable td { display:table-cell !important; width:auto !important; border:1px solid black !important; padding:8px !important; text-align:center !important; }
+  #itemsTable td::before { display:none !important; }
+  tr,.header,.contact { break-inside:avoid; }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
- <header class="header"><h1>أبو عباس للنجارة</h1><p>نظام الفواتير</p></header>
- <div id="syncStatus" class="status">جاري الاتصال بقاعدة البيانات...</div>
- <main id="homePage" class="screen">
-  <div class="home-grid">
-   <button class="home-card" onclick="openNewInvoice()"><span>＋</span>فاتورة جديدة</button>
-   <button class="home-card" onclick="openSearch()"><span>⌕</span>بحث عن الفاتورة</button>
-  </div>
- </main>
- <section id="newPage" class="screen hidden">
-  <div class="top-actions no-print"><h2 style="color:var(--gold)">فاتورة جديدة</h2><button class="secondary" onclick="goHome()">الرئيسية</button></div>
-  <div class="panel">
-   <form id="invoiceForm" onsubmit="saveInvoice(event)">
-    <input type="hidden" id="invoiceId">
-    <div class="form-grid">
-     <div><label>رقم الفاتورة</label><input id="invoiceNumber" readonly></div>
-     <div><label>التاريخ والوقت</label><input id="dateTime" readonly></div>
-     <div><label>اسم الزبون</label><input id="customer" required placeholder="اسم الزبون"></div>
-     <div><label>رقم الهاتف</label><input id="phone" inputmode="tel" placeholder="رقم الهاتف"></div>
-     <div><label>المنطقة (اختياري)</label><select id="region"><option value="">اختر المنطقة (اختياري)</option></select></div>
-     <div><label>قيمة الفاتورة (د.ب)</label><input id="total" type="number" min="0.001" step="0.001" required placeholder="0.000"></div>
-     <div><label>المبلغ المدفوع (د.ب)</label><input id="paid" type="number" min="0" step="0.001" value="0" required></div>
-     <div><label>طريقة الدفع</label><select id="method"><option value="كاش">كاش</option><option value="بنفت">بنفت</option></select></div>
-     <div class="full"><label>تفاصيل العمل / الطلب</label><textarea id="details" rows="4" required placeholder="اكتب تفاصيل العمل"></textarea></div>
+<section id="homePage" class="page active">
+  <div class="home">
+    <h1>أبو عباس</h1>
+    <div class="home-buttons">
+      <button type="button" onclick="newInvoice();showPage('invoicePage')">فاتورة جديدة</button>
+      <button type="button" onclick="showPage('searchPage')">بحث عن فاتورة</button>
     </div>
-    <div class="actions"><button type="submit">حفظ الفاتورة</button><button type="button" class="secondary" onclick="resetForm()">إلغاء</button></div>
-   </form>
   </div>
- </section>
- <section id="searchPage" class="screen hidden">
-  <div class="top-actions no-print"><h2 style="color:var(--gold)">بحث عن الفاتورة</h2><button class="secondary" onclick="goHome()">الرئيسية</button></div>
-  <div class="panel"><input id="searchInput" class="search" placeholder="ابحث برقم الفاتورة أو اسم الزبون أو الهاتف..." oninput="renderInvoices()"><div id="invoiceList"></div></div>
- </section>
- <section id="viewPage" class="screen hidden">
-  <div class="top-actions no-print"><h2 style="color:var(--gold)">تفاصيل الفاتورة</h2><button class="secondary" onclick="openSearch()">رجوع للبحث</button></div>
-  <div id="invoiceView"></div>
- </section>
- <section id="printArea" class="hidden"></section>
+</section>
+<section id="invoicePage" class="page">
+  <div class="container">
+    <div class="toolbar no-print">
+      <button type="button" onclick="showPage('homePage')">الصفحة الرئيسية</button>
+      <button type="button" onclick="showPage('searchPage')">بحث عن فاتورة</button>
+    </div>
+    <div class="header"><h1>أبو عباس</h1></div>
+    <div class="row">
+      <div class="field"><label for="invoiceNumber">رقم الفاتورة</label><input id="invoiceNumber" inputmode="numeric"></div>
+      <div class="field"><label for="invoiceDate">التاريخ</label><input type="date" id="invoiceDate"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="customerName">اسم الزبون</label><input id="customerName"></div>
+      <div class="field"><label for="customerPhone">رقم الهاتف</label><input type="tel" id="customerPhone"></div>
+    </div>
+    <div class="responsible">
+      <div class="row">
+        <div class="field"><label for="responsibleName">اسم المسؤول</label><input id="responsibleName"></div>
+        <div class="field"><label for="responsiblePhone">رقم المسؤول</label><input type="tel" id="responsiblePhone"></div>
+      </div>
+    </div>
+    <h2>تفاصيل الفاتورة</h2>
+    <div class="table-wrap">
+      <table id="itemsTable"><thead><tr>
+        <th>الصنف</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th><th class="no-print">حذف</th>
+      </tr></thead><tbody id="items"></tbody></table>
+    </div>
+    <div class="no-print" style="margin-top:12px"><button type="button" onclick="addItem()">إضافة صنف +</button></div>
+    <div class="total">المجموع: <span id="total">0.000</span> د.ب</div>
+    <label for="notes">ملاحظات</label><textarea id="notes" rows="3"></textarea>
+    <div class="contact"><div>للاستفسار والتواصل</div><div class="phones">39565630 - 33186137</div></div>
+    <div class="actions no-print">
+      <button type="button" onclick="saveInvoice()">حفظ الفاتورة</button>
+      <button type="button" id="saveImageButton" onclick="saveInvoiceImage()">📷 حفظ صورة في التلفون</button>
+      <button type="button" id="shareImageButton" onclick="shareInvoiceImage()">🟢 إرسال على واتساب</button>
+      <button type="button" onclick="window.print()">طباعة / حفظ PDF</button>
+      <button type="button" onclick="newInvoice()">فاتورة جديدة</button>
+    </div>
+    <p class="hint no-print">يمكنك حفظ الفاتورة كصورة أو مشاركتها عبر قائمة المشاركة في هاتفك واختيار واتساب. الفواتير المحفوظة داخل البرنامج تبقى على نفس المتصفح والجهاز.</p>
+  </div>
+</section>
+<section id="searchPage" class="page">
+  <div class="container">
+    <div class="toolbar">
+      <button type="button" onclick="showPage('homePage')">الصفحة الرئيسية</button>
+      <button type="button" onclick="newInvoice();showPage('invoicePage')">فاتورة جديدة</button>
+    </div>
+    <h2>بحث عن فاتورة</h2>
+    <input id="search" placeholder="رقم الفاتورة أو اسم الزبون أو رقم الهاتف" oninput="showInvoices()">
+    <div id="savedInvoices"></div>
+  </div>
+</section>
+<div id="renderStage" aria-hidden="true"></div>
+<div id="previewOverlay" role="dialog" aria-modal="true" aria-label="صورة الفاتورة">
+  <h2>صورة الفاتورة جاهزة</h2>
+  <p id="previewInstructions">اضغط مطوّلاً على الصورة لحفظها في تطبيق الصور، أو اضغط «تنزيل الصورة» لحفظها في الملفات.</p>
+  <img id="previewImage" alt="صورة الفاتورة">
+  <div class="preview-buttons">
+    <button type="button" onclick="downloadPreview()">تنزيل الصورة</button>
+    <button type="button" onclick="closePreview()">إغلاق</button>
+  </div>
 </div>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <script>
-// إعدادات مشروع Firebase نفسه للحفاظ على رابط الموقع الحالي
-const firebaseConfig={apiKey:"AIzaSyBHrcEY6n-J7za-4bPN8sYwnU6EauslTug",authDomain:"abu-abbas.firebaseapp.com",databaseURL:"https://abu-abbas-default-rtdb.firebaseio.com",projectId:"abu-abbas",storageBucket:"abu-abbas.firebasestorage.app",messagingSenderId:"863423401268",appId:"1:863423401268:web:e89111c6503f80caa82961",measurementId:"G-Y2299RY8T5"};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.database();
-// مسار جديد مستقل حتى لا نلمس أي بيانات قديمة
-const invoicesRef=db.ref('sharedInvoices');
-let invoices={};
-const $=id=>document.getElementById(id);
-const money=n=>(Number(n)||0).toFixed(3)+' د.ب';
-const regions=['المنامة','الحورة','القضيبية','العدلية','الجفير','السيف','السنابس','الدراز','البديع','الجنبية','سار','السهلة الشمالية','السهلة الجنوبية','جدحفص','البلاد القديم','الزنج','عذاري','توبلي','مدينة عيسى','مدينة حمد','الرفاع','الرفاع الشرقي','الرفاع الغربي','عالي','سلماباد','سترة','الخارجية','واديان','المعامير','العكر','نويدرات','القرية','المالكية','كرزكان','دمستان','صدد','شهركان','دار كليب','بني جمرة','باربار','أبو صيبع','مقابة','الشاخورة','جنوسان','الدير','سماهيج','عراد','المحرق','الحد','قلالي','البسيتين','المنامة الجديدة','رأس رمان','السنابس','كرانة','القريّة','الزلاق','الصخير','عسكر','جو','الدور','البحير','الرفاع فيوز','النويدرات','أم الحصم','ماحوز','الماحوز','البلاد القديم','السهلة'];
-regions.sort((a,b)=>a.localeCompare(b,'ar'));
-regions.forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;$('region').appendChild(o)});
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function dateLabel(d=new Date()){return d.toLocaleString('ar-BH',{dateStyle:'medium',timeStyle:'short'})}
-function numberLabel(){return 'AB-'+Date.now().toString().slice(-8)}
-function show(id){['homePage','newPage','searchPage','viewPage'].forEach(x=>$(x).classList.toggle('hidden',x!==id));$('printArea').classList.add('hidden');window.scrollTo(0,0)}
-function goHome(){show('homePage')}
-function openNewInvoice(){resetForm();show('newPage')}
-function openSearch(){show('searchPage');renderInvoices()}
-function resetForm(){$('invoiceForm').reset();$('invoiceId').value='';$('invoiceNumber').value=numberLabel();$('dateTime').value=dateLabel();$('paid').value='0';$('region').value=''}
-function renderInvoices(){const q=($('searchInput').value||'').trim().toLowerCase();const arr=Object.entries(invoices).map(([id,v])=>({id,...v})).filter(v=>[v.number,v.customer,v.phone].some(x=>String(x||'').toLowerCase().includes(q))).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));$('invoiceList').innerHTML=arr.length?`<div class="table-wrap"><table><thead><tr><th>رقم الفاتورة</th><th>الزبون</th><th>المنطقة</th><th>التاريخ والوقت</th><th>الإجمالي</th><th>المتبقي</th><th>عرض</th></tr></thead><tbody>${arr.map(i=>`<tr><td>${esc(i.number)}</td><td>${esc(i.customer)}</td><td>${esc(i.region||'-')}</td><td>${esc(i.dateTime||'')}</td><td>${money(i.total)}</td><td>${money(Math.max(0,(+i.total||0)-(+i.paid||0)))}</td><td><button class="small" onclick="viewInvoice('${i.id}')">فتح</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">لا توجد فواتير مطابقة</div>'}
-async function saveInvoice(e){e.preventDefault();const total=Number($('total').value),paid=Number($('paid').value);if(total<=0||paid<0||paid>total){alert('تأكد من قيمة الفاتورة والمبلغ المدفوع.');return}const id=$('invoiceId').value||invoicesRef.push().key;const old=invoices[id]||{};const item={number:old.number||$('invoiceNumber').value||numberLabel(),customer:$('customer').value.trim(),phone:$('phone').value.trim(),region:$('region').value,details:$('details').value.trim(),total,paid,method:paid>0?$('method').value:'لم يدفع',dateTime:old.dateTime||$('dateTime').value,createdAt:old.createdAt||Date.now(),updatedAt:Date.now()};try{await invoicesRef.child(id).set(item);alert('تم حفظ الفاتورة، وستظهر على الكمبيوتر والتلفون عند استخدام الرابط نفسه.');resetForm();openSearch()}catch(err){alert('تعذر الحفظ. تأكد من قواعد Realtime Database والاتصال بالإنترنت.\n'+err.message)}}
-function viewInvoice(id){const i=invoices[id];if(!i)return;const remaining=Math.max(0,(+i.total||0)-(+i.paid||0));$('invoiceView').innerHTML=`<div class="panel"><div id="paper" class="invoice-paper"><h2>أبو عباس للنجارة</h2><h3>فاتورة رقم: ${esc(i.number)}</h3><p>التاريخ والوقت: ${esc(i.dateTime)}</p><hr><p>اسم الزبون: ${esc(i.customer)}</p><p>رقم الهاتف: ${esc(i.phone||'-')}</p><p>المنطقة: ${esc(i.region||'-')}</p><hr><p>تفاصيل العمل: ${esc(i.details)}</p><hr><p>إجمالي الفاتورة: <b>${money(i.total)}</b></p><p>المدفوع: <b>${money(i.paid)}</b></p><p>طريقة الدفع: <b>${esc(i.method||'لم يدفع')}</b></p><p>المتبقي: <b>${money(remaining)}</b></p><hr><p>شكراً لتعاملكم معنا</p></div><div class="actions no-print"><button onclick="printInvoice()">طباعة الفاتورة</button><button class="secondary" onclick="editInvoice('${id}')">تعديل</button><button class="danger" onclick="deleteInvoice('${id}')">حذف</button></div></div>`;show('viewPage')}
-function printInvoice(){const paper=$('paper');if(!paper)return;const w=window.open('','_blank');w.document.write('<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>فاتورة أبو عباس</title><style>body{font-family:Tahoma,Arial;padding:25px}.invoice-paper{max-width:750px;margin:auto}h2{color:#8a6825}hr{border:0;border-top:1px solid #ddd;margin:16px 0}</style></head><body>'+paper.outerHTML+'</body></html>');w.document.close();w.focus();w.print()}
-function editInvoice(id){const i=invoices[id];if(!i)return;$('invoiceId').value=id;$('invoiceNumber').value=i.number;$('dateTime').value=i.dateTime;$('customer').value=i.customer||'';$('phone').value=i.phone||'';$('region').value=i.region||'';$('total').value=i.total;$('paid').value=i.paid||0;$('method').value=i.method==='بنفت'?'بنفت':'كاش';$('details').value=i.details||'';show('newPage')}
-async function deleteInvoice(id){if(!confirm('هل تريد حذف هذه الفاتورة نهائياً؟'))return;try{await invoicesRef.child(id).remove();alert('تم حذف الفاتورة');openSearch()}catch(e){alert('تعذر الحذف: '+e.message)}}
-invoicesRef.on('value',snap=>{invoices=snap.val()||{};$('syncStatus').textContent='متصل — تتم مزامنة الفواتير تلقائياً بين الأجهزة';if(!$('searchPage').classList.contains('hidden'))renderInvoices()},err=>{$('syncStatus').textContent='تعذر الاتصال: '+err.message+' — راجع قواعد قاعدة البيانات'});
-resetForm();
+const storageKey = "abu_abbas_invoices";
+const sequenceKey = "abu_abbas_next_number";
+let currentId = null;
+let previewBlobUrl = null;
+let previewFileName = "";
+const el = id => document.getElementById(id);
+
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(page => page.classList.toggle("active", page.id === id));
+  if (id === "searchPage") showInvoices();
+  window.scrollTo(0,0);
+}
+function getInvoices() {
+  try { const data = JSON.parse(localStorage.getItem(storageKey) || "[]"); return Array.isArray(data) ? data : []; }
+  catch { return []; }
+}
+function addItem(item={}) {
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td data-label="الصنف"><input class="name" placeholder="الصنف" aria-label="اسم الصنف"></td>
+    <td data-label="الكمية"><input class="qty" type="number" min="0" step="any" inputmode="decimal" aria-label="الكمية"></td>
+    <td data-label="السعر"><input class="price" type="number" min="0" step="0.001" inputmode="decimal" aria-label="السعر بالدينار البحريني"></td>
+    <td data-label="الإجمالي" class="lineTotal">0.000</td>
+    <td data-label="حذف" class="no-print"><button type="button" onclick="removeItem(this)">حذف</button></td>`;
+  el("items").appendChild(row);
+  row.querySelector(".name").value = item.name || "";
+  row.querySelector(".qty").value = item.qty ?? 1;
+  row.querySelector(".price").value = item.price ?? 0;
+  row.querySelectorAll("input").forEach(input => input.addEventListener("input",calculateTotal));
+  calculateTotal();
+}
+function removeItem(button) { button.closest("tr").remove(); calculateTotal(); }
+function calculateTotal() {
+  let total=0;
+  document.querySelectorAll("#items tr").forEach(row => {
+    const qty=Number(row.querySelector(".qty").value)||0;
+    const price=Number(row.querySelector(".price").value)||0;
+    const line=qty*price;
+    row.querySelector(".lineTotal").textContent=line.toFixed(3);
+    total+=line;
+  });
+  el("total").textContent=total.toFixed(3);
+}
+function nextInvoiceNumber() {
+  const numbers=getInvoices().map(i=>Number(i.number)).filter(n=>Number.isSafeInteger(n)&&n>0);
+  const saved=Number(localStorage.getItem(sequenceKey)||1);
+  return Math.max(1,Number.isSafeInteger(saved)?saved:1,...numbers.map(n=>n+1));
+}
+function localDate() {
+  const d=new Date();
+  return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");
+}
+function newInvoice() {
+  currentId=null;
+  el("invoiceNumber").value=String(nextInvoiceNumber());
+  el("invoiceDate").value=localDate();
+  ["customerName","customerPhone","responsibleName","responsiblePhone","notes"].forEach(id=>el(id).value="");
+  el("items").innerHTML="";
+  addItem();
+}
+function collectItems() {
+  return [...document.querySelectorAll("#items tr")].map(row=>({
+    name:row.querySelector(".name").value,
+    qty:Number(row.querySelector(".qty").value)||0,
+    price:Number(row.querySelector(".price").value)||0
+  }));
+}
+function collectInvoice() {
+  return {
+    id:currentId||String(Date.now()), number:el("invoiceNumber").value.trim(),
+    date:el("invoiceDate").value, customer:el("customerName").value,
+    phone:el("customerPhone").value, responsibleName:el("responsibleName").value,
+    responsiblePhone:el("responsiblePhone").value, notes:el("notes").value,
+    items:collectItems()
+  };
+}
+function saveInvoice() {
+  const invoices=getInvoices();
+  const invoice=collectInvoice();
+  if (!invoice.number) { alert("يرجى إدخال رقم الفاتورة"); return; }
+  if (invoices.some(i=>String(i.number)===invoice.number&&String(i.id)!==String(invoice.id))) {
+    alert("رقم الفاتورة مستخدم مسبقاً"); return;
+  }
+  const idx=invoices.findIndex(i=>String(i.id)===String(invoice.id));
+  if(idx>=0) invoices[idx]=invoice;
+  else invoices.unshift(invoice);
+  try {
+    localStorage.setItem(storageKey,JSON.stringify(invoices));
+    const number=Number(invoice.number);
+    if(Number.isSafeInteger(number)&&number>0) localStorage.setItem(sequenceKey,String(Math.max(nextInvoiceNumber(),number+1)));
+    currentId=invoice.id;
+    alert("تم حفظ الفاتورة بنجاح");
+  } catch { alert("تعذر حفظ الفاتورة. تأكد أن المتصفح يسمح بالتخزين."); }
+}
+function showInvoices() {
+  const search=el("search").value.trim().toLowerCase();
+  const container=el("savedInvoices"); container.replaceChildren();
+  const invoices=getInvoices().filter(i=>[i.number,i.customer,i.phone].some(v=>String(v??"").toLowerCase().includes(search)));
+  if(!invoices.length) { const p=document.createElement("p");p.textContent="لا توجد فواتير مطابقة.";container.appendChild(p);return; }
+  invoices.forEach(i=>{
+    const div=document.createElement("div"); div.className="saved-item";
+    const title=document.createElement("span"); title.textContent=i.number+" - "+(i.customer||"بدون اسم");
+    const edit=document.createElement("button");edit.type="button";edit.textContent="فتح / تعديل";edit.onclick=()=>loadInvoice(i.id);
+    const remove=document.createElement("button");remove.type="button";remove.textContent="حذف";remove.onclick=()=>deleteInvoice(i.id);
+    div.append(title,edit,remove);container.appendChild(div);
+  });
+}
+function loadInvoice(id) {
+  const i=getInvoices().find(x=>String(x.id)===String(id));if(!i)return;
+  currentId=i.id;
+  const fields={invoiceNumber:i.number,invoiceDate:i.date,customerName:i.customer,customerPhone:i.phone,responsibleName:i.responsibleName,responsiblePhone:i.responsiblePhone,notes:i.notes};
+  Object.entries(fields).forEach(([id,value])=>el(id).value=value??"");
+  el("items").innerHTML="";(i.items||[]).forEach(item=>addItem(item));calculateTotal();showPage("invoicePage");
+}
+function deleteInvoice(id) {
+  if(!confirm("هل تريد حذف هذه الفاتورة؟"))return;
+  const invoices=getInvoices().filter(i=>String(i.id)!==String(id));
+  try {localStorage.setItem(storageKey,JSON.stringify(invoices));if(String(currentId)===String(id))currentId=null;showInvoices();}
+  catch {alert("تعذر حذف الفاتورة");}
+}
+
+/* إنشاء نسخة مرتبة من الفاتورة خاصة بالصورة، بدون الأزرار أو حقول الإدخال */
+function buildExportCard(invoice) {
+  const card=document.createElement("div");card.className="export-card";
+  card.innerHTML=`
+    <h1 class="export-title">أبو عباس</h1>
+    <p class="export-subtitle">فاتورة</p>
+    <div class="export-meta">
+      <div class="export-box"><span class="export-label">رقم الفاتورة</span><span class="export-value" id="eNumber"></span></div>
+      <div class="export-box"><span class="export-label">التاريخ</span><span class="export-value" id="eDate"></span></div>
+      <div class="export-box"><span class="export-label">اسم الزبون</span><span class="export-value" id="eCustomer"></span></div>
+      <div class="export-box"><span class="export-label">رقم هاتف الزبون</span><span class="export-value" id="ePhone"></span></div>
+      <div class="export-box"><span class="export-label">اسم المسؤول</span><span class="export-value" id="eResponsible"></span></div>
+      <div class="export-box"><span class="export-label">رقم المسؤول</span><span class="export-value" id="eResponsiblePhone"></span></div>
+    </div>
+    <div class="export-section">تفاصيل الفاتورة</div>
+    <div id="eItems"></div>
+    <div class="export-total" id="eTotal"></div>
+    <div class="export-section" id="eNotesTitle">ملاحظات</div>
+    <p class="export-notes" id="eNotes"></p>
+    <div class="export-contact">للاستفسار والتواصل<b>39565630 - 33186137</b></div>`;
+  const set=(id,value)=>card.querySelector("#"+id).textContent=String(value??"").trim()||"—";
+  set("eNumber",invoice.number);set("eDate",invoice.date);set("eCustomer",invoice.customer);
+  set("ePhone",invoice.phone);set("eResponsible",invoice.responsibleName);set("eResponsiblePhone",invoice.responsiblePhone);
+  const list=card.querySelector("#eItems");
+  (invoice.items||[]).forEach((i,n)=>{
+    const row=document.createElement("div");row.className="export-product";
+    const title=document.createElement("div");title.className="export-product-name";title.textContent=(n+1)+". "+(i.name||"صنف بدون اسم");
+    const details=document.createElement("div");details.className="export-product-details";
+    [["الكمية",i.qty],["السعر",Number(i.price||0).toFixed(3)],["الإجمالي",((Number(i.qty)||0)*(Number(i.price)||0)).toFixed(3)]].forEach(([label,value])=>{
+      const box=document.createElement("div");const small=document.createElement("span");small.textContent=label;
+      const b=document.createElement("b");b.textContent=String(value);box.append(small,b);details.appendChild(box);
+    });
+    row.append(title,details);list.appendChild(row);
+  });
+  if(!invoice.items?.length) {const p=document.createElement("p");p.textContent="لا توجد أصناف";list.appendChild(p);}
+  const total=(invoice.items||[]).reduce((sum,i)=>sum+(Number(i.qty)||0)*(Number(i.price)||0),0);
+  set("eTotal","المجموع: "+total.toFixed(3)+" د.ب");
+  if(String(invoice.notes||"").trim()) set("eNotes",invoice.notes);
+  else {card.querySelector("#eNotesTitle").remove();card.querySelector("#eNotes").remove();}
+  return card;
+}
+function waitForPaint() {return new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));}
+async function renderInvoicePng() {
+  if(typeof html2canvas!=="function") throw new Error("تعذر تحميل أداة حفظ الصور. تأكد من اتصال الإنترنت ثم حدّث الصفحة.");
+  const invoice=collectInvoice();
+  const stage=el("renderStage");stage.replaceChildren();
+  const card=buildExportCard(invoice);stage.appendChild(card);stage.classList.add("open");
+  try {
+    if(document.fonts?.ready) await document.fonts.ready;
+    await waitForPaint();
+    const scale=card.scrollHeight>4500?1.5:2;
+    const canvas=await html2canvas(card,{backgroundColor:"#ffffff",scale:scale,useCORS:true,logging:false,scrollX:0,scrollY:0});
+    const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error("تعذّر إنشاء الصورة")),"image/png"));
+    return {blob,fileName:"abu-abbas-invoice-"+(invoice.number.replace(/[^a-zA-Z0-9_-]/g,"_")||"new")+".png",invoice};
+  } finally {stage.classList.remove("open");stage.replaceChildren();}
+}
+function downloadBlob(blob,fileName) {
+  const url=URL.createObjectURL(blob);const a=document.createElement("a");
+  a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+function showPreview(blob,fileName,instructions) {
+  closePreview();
+  previewBlobUrl=URL.createObjectURL(blob);previewFileName=fileName;
+  el("previewImage").src=previewBlobUrl;
+  el("previewInstructions").textContent=instructions;
+  el("previewOverlay").classList.add("open");
+}
+function closePreview() {
+  el("previewOverlay").classList.remove("open");el("previewImage").removeAttribute("src");
+  if(previewBlobUrl) URL.revokeObjectURL(previewBlobUrl);
+  previewBlobUrl=null;
+}
+function downloadPreview() {
+  if(!previewBlobUrl)return;
+  const a=document.createElement("a");a.href=previewBlobUrl;a.download=previewFileName;document.body.appendChild(a);a.click();a.remove();
+}
+function isIOS() {return /iPhone|iPad|iPod/.test(navigator.userAgent);}
+async function withBusy(buttonId,operation) {
+  const button=el(buttonId);button.disabled=true;
+  const old=button.textContent;button.textContent="جاري تجهيز الصورة...";
+  try {await operation();} catch(error) {console.error(error);alert(error?.message||"حدث خطأ عند إنشاء صورة الفاتورة");}
+  finally {button.disabled=false;button.textContent=old;}
+}
+async function saveInvoiceImage() {
+  await withBusy("saveImageButton",async()=>{
+    const {blob,fileName}=await renderInvoicePng();
+    if(isIOS()) {
+      // فتح الصورة داخل الصفحة: يمكن حفظها في «الصور» بالضغط المطول.
+      showPreview(blob,fileName,"على الآيفون: اضغط مطوّلاً على صورة الفاتورة واختر «حفظ في الصور». أو اضغط «تنزيل الصورة» لحفظها في الملفات.");
+    } else {
+      downloadBlob(blob,fileName);
+      showPreview(blob,fileName,"تم طلب تنزيل صورة الفاتورة. يمكنك أيضًا الضغط مطوّلاً على الصورة لحفظها في هاتفك.");
+    }
+  });
+}
+async function shareInvoiceImage() {
+  await withBusy("shareImageButton",async()=>{
+    const {blob,fileName,invoice}=await renderInvoicePng();
+    const file=new File([blob],fileName,{type:"image/png"});
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))) {
+      try {
+        await navigator.share({files:[file],title:"فاتورة أبو عباس",text:"فاتورة رقم "+(invoice.number||"جديدة")});
+        return;
+      } catch(error) {
+        if(error?.name==="AbortError")return; // المستخدم أغلق قائمة المشاركة.
+        console.warn("تعذرت المشاركة المباشرة",error);
+      }
+    }
+    showPreview(blob,fileName,"المشاركة المباشرة للصورة غير متاحة في هذا المتصفح. احفظ الصورة من هنا، ثم افتح واتساب وأرسلها كمرفق. على الآيفون اضغط مطوّلاً على الصورة لحفظها في الصور.");
+  });
+}
+newInvoice();
 </script>
 </body>
 </html>
